@@ -1,7 +1,7 @@
 FROM rocker/shiny:latest
 
 # 1. Install Linux system tools FIRST
-# These are mandatory for leaflet and RPostgres to install correctly
+# These provide the "engine" that leaflet and RPostgres need to run
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     libssl-dev \
@@ -13,7 +13,6 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # 2. Install R packages SECOND
-# We install them in one large command to ensure they all build together
 RUN R -e "install.packages(c('shiny', 'shinydashboard', 'RPostgres', 'DBI', 'DT', 'shinyjs', 'leaflet', 'dplyr', 'plotly', 'tidyr'), repos='https://cran.rstudio.com/')"
 
 # 3. Copy your app files
