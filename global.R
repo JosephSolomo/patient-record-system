@@ -1,14 +1,22 @@
+# --- EMERGENCY PACKAGE CHECK (For Render/Leaflet Loop) ---
+# This block ensures leaflet is installed even if the Docker build missed it
+if (!require("leaflet")) {
+  install.packages("leaflet", repos="https://cran.rstudio.com/")
+  library(leaflet)
+}
+
+# --- Standard Library Loading ---
 library(shiny)
 library(RPostgres)
 library(DBI)
 library(DT)
 library(shinyjs)
-library(leaflet)
 library(dplyr)
 library(plotly)
 library(tidyr)
 
 # --- Sourcing Database and Module Files ---
+# Note: Ensure these file paths match your GitHub folder structure exactly (Case Sensitive!)
 source("db/db_connect.R")
 source("db/db_queries.R") 
 source("module/patient_form.R")
@@ -44,7 +52,7 @@ tagapo_locations <- data.frame(
   ),
   lat = c(14.3200, 14.3180, 14.3195, 14.3185, 14.3210, 14.3175, 14.3220, 14.3160, 14.3205, 14.3190,
           14.3170, 14.3215, 14.3155, 14.3140, 14.3130, 14.3300, 14.3225, 14.3235, 14.3200, 14.3182,
-          14.3198, 14.3172, 121.1100, 14.3165, 14.3150, 14.3240, 14.3255, 14.3188, 14.3192, 14.3178),
+          14.3198, 14.3172, 14.3180, 14.3165, 14.3150, 14.3240, 14.3255, 14.3188, 14.3192, 14.3178),
   lng = c(121.1100, 121.1050, 121.1080, 121.0976, 121.1000, 121.1005, 121.1015, 121.1030, 121.1110, 121.1090,
           121.1070, 121.1000, 121.1040, 121.1060, 121.1055, 121.1000, 121.1120, 121.1020, 121.1115, 121.1025,
           121.1045, 121.1012, 121.1065, 121.1085, 121.1035, 121.1050, 121.1075, 121.1105, 121.0990, 121.1018),
