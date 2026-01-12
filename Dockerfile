@@ -8,6 +8,14 @@ RUN apt-get update && apt-get install -y \
     libproj-dev \
     libgeos-dev \
     libudunits2-dev \
+    librsvg2-dev \
+    libfontconfig1-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libtiff5-dev \
+    libjpeg-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN R -e "install.packages(c('shiny', 'shinydashboard', 'RPostgres', 'DBI', 'DT', 'shinyjs', 'leaflet', 'dplyr', 'plotly', 'tidyr'), repos='https://cran.rstudio.com/', dependencies=TRUE)"
