@@ -1,6 +1,8 @@
 FROM rocker/shiny:latest
 
 RUN apt-get update && apt-get install -y \
+    cmake \
+    libabsl-dev \
     libpq-dev \
     libssl-dev \
     libxml2-dev \
