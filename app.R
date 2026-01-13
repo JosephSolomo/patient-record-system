@@ -1,18 +1,20 @@
-# ================================
-# app.R
-# ================================
+# ==============================================================================
+# app.R - Orchestration
+# ==============================================================================
 library(shiny)
+library(shinyjs)
+library(DT)
+library(leaflet)
 library(DBI)
 library(RPostgres)
 
-# 1. Load global configuration
-# Keep this only if global.R is still in your main root folder
-if (file.exists("global.R")) source("global.R")
+# Note: Shiny 1.5+ automatically loads EVERY file in the R/ folder!
+# (This includes: 01_db_connect.R, 02_db_queries.R, patient_map.R, etc.)
 
-# 2. Load the main UI and Server components
-# These MUST remain because they are in their own folders, not the R/ folder
+# 1. Load Main Components
+source("global.R")
 source("ui/ui_main.R")
 source("server/server_main.R")
 
-# 3. Launch the application
+# 2. Launch
 shinyApp(ui, server)
