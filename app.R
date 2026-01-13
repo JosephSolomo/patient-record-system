@@ -2,6 +2,7 @@
 # app.R
 # ================================
 
+source("patient_map.R")
 source("global.R")
 
 source("ui/ui_main.R")
