@@ -2,25 +2,11 @@
 # global.R
 # ==============================================================================
 
-# --- EMERGENCY PACKAGE CHECK (For Render/Leaflet Loop) ---
+# --- EMERGENCY PACKAGE CHECK ---
 if (!require("leaflet")) {
   install.packages("leaflet", repos="https://cran.rstudio.com/")
   library(leaflet)
 }
-
-# --- Standard Library Loading ---
-library(shiny)
-library(RPostgres)
-library(DBI)
-library(DT)
-library(shinyjs)
-library(dplyr)
-library(plotly)
-library(tidyr)
-
-# --- IMPORTANT: Sourcing has been removed! ---
-# Shiny 1.5+ automatically sources all files in the R/ folder.
-# DO NOT manually source db_connect.R, db_queries.R, etc. here.
 
 # --- 4-Digit Alphanumeric ID Helpers ---
 format_custom_id <- function(id_vec) {
@@ -38,7 +24,7 @@ clean_custom_id <- function(custom_id) {
   as.numeric(gsub("[A-Z]", "", custom_id))
 }
 
-# --- Tagapo Subdivision/Compound Lookup (Top 30) ---
+# --- Tagapo Subdivision/Compound Lookup ---
 tagapo_locations <- data.frame(
   location_name = c(
     "Alinsod Compound", "Amihan Subdivision", "Anros Subdivision", "Bagong Sta. Rosa Village",

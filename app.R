@@ -1,5 +1,5 @@
 # ==============================================================================
-# app.R - Orchestration
+# app.R
 # ==============================================================================
 library(shiny)
 library(shinyjs)
@@ -7,14 +7,22 @@ library(DT)
 library(leaflet)
 library(DBI)
 library(RPostgres)
+library(dplyr)
+library(plotly)
+library(tidyr)
 
-# Note: Shiny 1.5+ automatically loads EVERY file in the R/ folder!
-# (This includes: 01_db_connect.R, 02_db_queries.R, patient_map.R, etc.)
+# 1. Load Database Logic First
+source("db/db_connect.R")
+source("db/db_queries.R")
 
-# 1. Load Main Components
+# 2. Load Modules Second
+source("module/patient_form.R")
+source("module/patient_map.R")
+
+# 3. Load Main App Structure
 source("global.R")
 source("ui/ui_main.R")
 source("server/server_main.R")
 
-# 2. Launch
+# 4. Launch
 shinyApp(ui, server)
