@@ -1,5 +1,8 @@
+# ==============================================================================
+# global.R
+# ==============================================================================
+
 # --- EMERGENCY PACKAGE CHECK (For Render/Leaflet Loop) ---
-# This block ensures leaflet is installed even if the Docker build missed it
 if (!require("leaflet")) {
   install.packages("leaflet", repos="https://cran.rstudio.com/")
   library(leaflet)
@@ -15,12 +18,9 @@ library(dplyr)
 library(plotly)
 library(tidyr)
 
-# --- Sourcing Database and Module Files ---
-# Note: Ensure these file paths match your GitHub folder structure exactly (Case Sensitive!)
-source("db/db_connect.R")
-source("db/db_queries.R") 
-source("module/patient_form.R")
-source("module/patient_map.R")
+# --- IMPORTANT: Sourcing has been removed! ---
+# Shiny 1.5+ automatically sources all files in the R/ folder.
+# DO NOT manually source db_connect.R, db_queries.R, etc. here.
 
 # --- 4-Digit Alphanumeric ID Helpers ---
 format_custom_id <- function(id_vec) {
@@ -32,7 +32,6 @@ format_custom_id <- function(id_vec) {
 }
 
 clean_custom_id <- function(custom_id) {
-  # FIXED: Robust check for NULL/NA/Empty to prevent Shiny crash
   if (is.null(custom_id) || length(custom_id) == 0 || is.na(custom_id) || custom_id == "") {
     return(NULL)
   }
