@@ -1,18 +1,16 @@
 # ================================
 # app.R
 # ================================
-
-# Load required libraries
 library(shiny)
 library(DBI)
 library(RPostgres)
 
-source("module/patient_map.R")
-source("module/patient_form.R") # Sourcing this as well since it's in your module folder
+source("module/patient_map.R", local = TRUE)
+source("module/patient_form.R", local = TRUE)
 
-source("global.R")
+source("global.R", local = TRUE)
 
-source("ui/ui_main.R")
-source("server/server_main.R")
+source("ui/ui_main.R", local = TRUE)
+source("server/server_main.R", local = TRUE)
 
 shinyApp(ui, server)
