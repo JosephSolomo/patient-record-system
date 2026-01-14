@@ -11,7 +11,7 @@ library(dplyr)
 library(plotly)
 library(tidyr)
 
-# 1. Load Database Logic First
+# 1. Load Database Logic First (Crucial for get_diagnoses)
 source("db/db_connect.R")
 source("db/db_queries.R")
 

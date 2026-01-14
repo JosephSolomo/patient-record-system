@@ -1,3 +1,7 @@
+# ==============================================================================
+# module/patient_map.R
+# ==============================================================================
+
 # --- MODULE UI ---
 patientMapUI <- function(id) {
   ns <- NS(id)
@@ -36,11 +40,12 @@ patientMapServer <- function(id, get_data) {
     # 2. UI RENDERERS
     output$diagnosis_selector <- renderUI({
       conn <- create_connection()
-      diagnoses <- get_diagnoses(conn)
+      # Calls get_diagnoses now located in db_queries.R
+      diagnoses_df <- get_diagnoses(conn)
       dbDisconnect(conn)
       
       selectInput(ns("diag_select"), "Filter by Diagnosis:",
-                  choices = c("All Diagnoses" = "", diagnoses$complaint_or_diagnosis))
+                  choices = c("All Diagnoses" = "", diagnoses_df[[1]]))
     })
     
     observeEvent(input$purok_map_marker_click, { 
@@ -82,9 +87,8 @@ patientMapServer <- function(id, get_data) {
           br(), br(),
           renderTable({
             req(nrow(filtered_list) > 0)
-            # UPDATED: We now select 'complete_address' instead of 'Area'
             display_df <- filtered_list[, c("Patient Name", "complete_address")]
-            colnames(display_df) <- c("Patient Name", "Address") # Renamed for UI
+            colnames(display_df) <- c("Patient Name", "Address")
             display_df
           }, striped = TRUE, hover = TRUE, width = "100%")
         )

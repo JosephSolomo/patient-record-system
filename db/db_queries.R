@@ -1,3 +1,13 @@
+# ==============================================================================
+# db/db_queries.R
+# ==============================================================================
+
+# --- Locator Helper ---
+get_diagnoses <- function(conn) {
+  # This function fetches all unique diagnoses for the Locator dropdown
+  dbGetQuery(conn, "SELECT DISTINCT complaint_or_diagnosis FROM patient_visits ORDER BY complaint_or_diagnosis ASC")
+}
+
 # --- Authentication ---
 get_user_by_credentials <- function(conn, username, password) {
   dbGetQuery(conn, "SELECT * FROM users WHERE username = $1 AND password_text = $2",
@@ -8,7 +18,6 @@ get_user_by_credentials <- function(conn, username, password) {
 get_patients <- function(conn, search_term = "") {
   if (is.null(search_term) || length(search_term) == 0) search_term <- ""
   
-  # DISTINCT ON prevents multiple rows for the same patient in the dashboard
   sql <- "
     SELECT DISTINCT ON (p.patient_id)
            p.patient_id AS \"ID\", 
@@ -31,7 +40,6 @@ get_patients <- function(conn, search_term = "") {
 
 # --- Fetch Patient Visit History & Encoders ---
 get_patient_history <- function(conn, patient_id) {
-  # Includes staff_initials to show who encoded each specific historical visit
   dbGetQuery(conn, "
     SELECT visit_date AS \"Date\", 
            complaint_or_diagnosis AS \"Diagnosis\",
